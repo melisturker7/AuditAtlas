@@ -1,6 +1,6 @@
 import { ArrowUpRight } from "./brand";
 import { MapPreview } from "./map-preview";
-import { RegionalMap } from "./regional-map";
+import { demoAuditReports } from "../data/demo-audit-reports";
 import { focusCountries } from "../data/countries";
 
 const metrics = [
@@ -10,9 +10,9 @@ const metrics = [
     note: "AuditAtlas regional focus",
   },
   {
-    value: "OSM",
-    label: "Map preview",
-    note: "Country locations only",
+    value: "Demo",
+    label: "Municipality locations",
+    note: "Synthetic sample records",
   },
   {
     value: "Not connected",
@@ -67,7 +67,7 @@ function HeroSection() {
             <div className="mt-9 flex flex-wrap items-center gap-4">
               <a
                 className="inline-flex items-center gap-3 rounded-full bg-[#173D35] px-6 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-[#245448] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4C7767]"
-                href="#map-preview"
+                href="#audit-reports"
               >
                 Explore the Map <ArrowUpRight />
               </a>
@@ -89,21 +89,20 @@ function HeroSection() {
               <div className="flex items-center justify-between px-3 pb-3 pt-2">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.13em] text-[#718177]">
-                    Regional preview
+                    Municipality map
                   </p>
                   <p className="mt-1 text-sm font-semibold text-[#203D34]">
-                    Six-country regional focus
+                    Fictional municipality locations
                   </p>
                 </div>
                 <span className="rounded-full bg-[#FFF4DE] px-3 py-1.5 text-[11px] font-semibold text-[#8A672B]">
                   DEMO ONLY
                 </span>
               </div>
-              <div className="h-[290px] overflow-hidden rounded-[18px] bg-[#F2F5EC] sm:h-[340px]">
-                <RegionalMap idPrefix="hero-map" />
-              </div>
+              <MapPreview compact reports={demoAuditReports} />
               <p className="px-3 pb-1 pt-4 text-[11px] text-[#6D7D72]">
-                Schematic country locator · Not to scale
+                Synthetic demo records only. Use the interactive explorer below
+                to filter reports and view municipality details.
               </p>
             </div>
           </div>
@@ -144,96 +143,11 @@ function KpiSection() {
   );
 }
 
-function RegionalMapPreview() {
-  return (
-    <section
-      aria-labelledby="map-preview-heading"
-      className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-24 lg:px-12"
-      id="map-preview"
-    >
-      <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#66806F]">
-            Regional map preview
-          </p>
-          <h2
-            className="mt-3 text-3xl font-medium tracking-[-0.05em] text-[#17352F] sm:text-4xl"
-            id="map-preview-heading"
-          >
-            A clearer view of the region.
-          </h2>
-          <p className="mt-3 max-w-xl text-sm leading-6 text-[#708077] sm:text-base">
-            Explore OpenStreetMap with a locator at each focus country&apos;s
-            capital. These markers identify countries, not audit activity.
-          </p>
-        </div>
-        <a
-          className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-[#315E4C] transition hover:text-[#17352F] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#4C7767]"
-          href="#compare-countries"
-        >
-          Compare countries <ArrowUpRight />
-        </a>
-      </div>
-
-      <div className="grid overflow-hidden rounded-[26px] border border-[#E5EAE2] bg-white lg:grid-cols-[1.15fr_0.85fr]">
-        <div className="bg-[#F0F4EA] p-4 sm:p-7">
-          <MapPreview />
-          <p className="mt-3 px-1 text-xs leading-5 text-[#718177]">
-            Map markers indicate country capitals only. They do not represent
-            audit activity, findings, or project locations.
-          </p>
-        </div>
-        <div className="p-6 sm:p-8 lg:p-9">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.13em] text-[#75847A]">
-                Country focus
-              </p>
-              <h3 className="mt-2 text-2xl font-medium tracking-[-0.04em] text-[#17352F]">
-                Six-country regional focus
-              </h3>
-            </div>
-            <span className="rounded-full bg-[#FFF4DE] px-3 py-1.5 text-[11px] font-semibold text-[#8A672B]">
-              DEMO ONLY
-            </span>
-          </div>
-          <div className="mt-6 grid grid-cols-2 gap-3">
-            <div className="rounded-2xl bg-[#F7F8F4] p-4">
-              <p className="text-2xl font-medium tracking-[-0.04em] text-[#234A3D]">
-                6
-              </p>
-              <p className="mt-1 text-xs text-[#78857B]">Countries in scope</p>
-            </div>
-            <div className="rounded-2xl bg-[#F7F8F4] p-4">
-              <p className="text-base font-semibold text-[#234A3D]">
-                Not connected
-              </p>
-              <p className="mt-1 text-xs text-[#78857B]">Official audit data</p>
-            </div>
-          </div>
-          <ul className="mt-6 grid grid-cols-2 gap-x-3 gap-y-2 border-t border-[#EBEEE8] pt-5 text-xs leading-5 text-[#687A70]">
-            {focusCountries.map((country) => (
-              <li className="flex items-start gap-2" key={country}>
-                <span
-                  aria-hidden="true"
-                  className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#7C9A83]"
-                />
-                {country}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export function HomepageSections() {
   return (
     <>
       <HeroSection />
       <KpiSection />
-      <RegionalMapPreview />
     </>
   );
 }

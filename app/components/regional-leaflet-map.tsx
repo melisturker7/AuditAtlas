@@ -1,4 +1,4 @@
-"use client";
+Links "use client";
 
 import { useEffect } from "react";
 import {
@@ -54,6 +54,11 @@ const regionalBounds: LatLngBoundsExpression = [
   [48.8, 30.2],
 ];
 
+const mapHeights = {
+  compact: "h-[300px] w-full sm:h-[340px] lg:h-[380px]",
+  standard: "h-[360px] w-full sm:h-[460px] lg:h-[540px]",
+} as const;
+
 function FitRegionalBounds() {
   const map = useMap();
 
@@ -68,12 +73,16 @@ function FitRegionalBounds() {
 }
 
 export function RegionalLeafletMap({
+  compact = false,
   onSelectReport,
   reports,
 }: {
+  compact?: boolean;
   onSelectReport?: (report: DemoAuditReport) => void;
   reports?: readonly DemoAuditReport[];
 }) {
+  const mapHeightClassName = compact ? mapHeights.compact : mapHeights.standard;
+
   return (
     <MapContainer
       aria-label={
@@ -82,7 +91,7 @@ export function RegionalLeafletMap({
           : `OpenStreetMap showing ${reports.length} fictional audit demonstration locations`
       }
       center={[44.2, 23.7]}
-      className="h-[360px] w-full bg-[#E9EFE2] sm:h-[460px] lg:h-[540px]"
+      className={`${mapHeightClassName} bg-[#E9EFE2]`}
       maxZoom={18}
       minZoom={4}
       scrollWheelZoom={false}
